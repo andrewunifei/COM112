@@ -8,7 +8,7 @@ typedef struct worker{
     int salary[1];
 }worker;
 
-void *selectionSort(worker *array, int length, int flag){ 
+void selectionSort(worker *array, int length, int flag){ 
     //flag irá ditar se a ordenação será alfabética ou por salário
 
     int i, j, k, min, aux;
