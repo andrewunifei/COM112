@@ -15,22 +15,26 @@ void *selectionSort(worker *array, int length, int flag){
     for (i = 0; i < length - 1; i++)
     {
         min = i;
-        for (j = i + 1; j < length; j++)
-        {
-            if(flag == 0){
-                if (array[j].salary[0] < array[min].salary[0])
-                { 
-                    min = j;
-                }
-            }
-            else{
+
+        if(flag == 1){
+            for (j = i + 1; j < length; j++)
+            {
                 if (array[j].salary[0] > array[min].salary[0])
                 { 
                     min = j;
-                }                
+                } 
             }
-            
         }
+        else{
+            for (j = i + 1; j < length; j++)
+            {
+                if (array[j].name[0] < array[min].name[0])
+                { 
+                    min = j;
+                } 
+            }
+        }
+
         if(min != i){
             aux = array[i].salary[0];
             for (k = 0; k < 10; k++)
@@ -49,11 +53,10 @@ void *selectionSort(worker *array, int length, int flag){
             {
                 array[min].name[k] = aux2[k];
             }
-            
+                
         }
-        
-    }
-    
+            
+    }  
 }
 
 void enterData(worker *instances, int length){
@@ -71,22 +74,45 @@ void enterData(worker *instances, int length){
 }
 
 int main(){
-    int i, quantity = 3;
+    int i, flag, quantity = 3;
     worker instances[quantity];
+
+    printf("A ordenação será por salário ou alfabética?\n");
+    printf("Digite 0 para ordenação alfabética!\n");
+    printf("Digite 1 para ordenação por salário decrescente!\n");
+    printf(">>> ");
+    scanf("%d", &flag);
+
+    while(flag != 0 && flag != 1){
+        printf("Por favor, entre com 0 ou 1!");
+        scanf("%d", &flag);
+    }
+
 
     enterData(instances, quantity);
     printf("\n");
 
-    printf("Antes da ordenação por salário: \n");
+    if(flag == 1){
+        printf("Antes da ordenação por salário: \n");
+    }
+    else{
+        printf("Antes da ordenação por ordem alfabética: \n");
+    }
+    
 
     for (i = 0; i < quantity; i++)
     {
         printf("nome: %s    Salário: R$%d\n", instances[i].name, instances[i].salary[0]);
     }
 
-    selectionSort(instances, quantity, 1);
+    selectionSort(instances, quantity, flag);
     printf("\n");
-    printf("Depois da ordenação por salário: \n");
+    if(flag == 1){
+        printf("Depois da ordenação por salário: \n");
+    }
+    else{
+        printf("Depois da ordenação por ordem alfabética: \n");
+    }
 
     for (i = 0; i < quantity; i++)
     {
@@ -95,5 +121,5 @@ int main(){
 
     printf("\n");
     
-        
+    return 0;
 }
