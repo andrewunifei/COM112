@@ -77,7 +77,7 @@ void enterData(worker *instances, int length){
 
 int main(){
     //Para não ficar muito cansativo entrar com os valores, é possível mudar a variável
-    //"quantity" para um valor menor que 10 (qualquer valor, na verdade)
+    //"quantity" para um valor menor que 10 (qualquer valor, na realidade)
     //essa variável representa a quantidade de instancias da struct "worker",
     //isto é, a quantidade de funcionários. O padrão é 10, como requisitado no exercício
 
