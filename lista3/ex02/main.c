@@ -7,7 +7,7 @@ typedef struct worker{
 }worker;
 
 void *selectionSort(worker *array, int length, int flag){ 
-    //flag irá ditar se a ordenação será crescente ou decrescente
+    //flag irá ditar se a ordenação será alfabética ou por salário
 
     int i, j, k, min, aux;
     char aux2[10];
@@ -69,13 +69,25 @@ void enterData(worker *instances, int length){
 
         printf("Entre com o salário: ");
         scanf("%d", instances[i].salary);
+
+        printf("\n");
     }
     
 }
 
 int main(){
-    int i, flag, quantity = 3;
+    //Para não ficar muito cansativo entrar com os valores, é possível mudar a variável
+    //"quantity" para um valor menor que 10 (qualquer valor, na verdade)
+    //essa variável representa a quantidade de instancias da struct "worker",
+    //isto é, a quantidade de funcionários. O padrão é 10, como requisitado no exercício
+
+    int quantity = 10;
+    int i, flag;
+
     worker instances[quantity];
+
+    enterData(instances, quantity);
+    printf("\n");
 
     printf("A ordenação será por salário ou alfabética?\n");
     printf("Digite 0 para ordenação alfabética!\n");
@@ -88,8 +100,6 @@ int main(){
         scanf("%d", &flag);
     }
 
-
-    enterData(instances, quantity);
     printf("\n");
 
     if(flag == 1){
@@ -107,6 +117,7 @@ int main(){
 
     selectionSort(instances, quantity, flag);
     printf("\n");
+
     if(flag == 1){
         printf("Depois da ordenação por salário: \n");
     }
