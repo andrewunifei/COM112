@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "com112_sort.h"
 
-void bubble_sort (int *v, int n) 
+void bubble_sort (int *v, int n, int *r) 
 {
-    int i, k, j, aux;
+    int i, k, j, aux, c = 0, t = 0;
 
     for (k = 1; k < n; k++) 
     {
@@ -15,22 +15,20 @@ void bubble_sort (int *v, int n)
                 aux = v[j];
                 v[j] = v[j + 1];
                 v[j + 1] = aux;
+                t++;
             }
+            c++;
         }
     }
 
-    printf("Vetor ordenado:\n");
-    printf("[");
-    for (i = 0; i < n; i++)
-    {
-        printf(" %d", v[i]);
-    }
-    printf(" ]\n\n");
+    r[0] = c;
+    r[1] = t;
 }
 
-void selection_sort(int *v, int n) 
+void selection_sort(int *v, int n, int *r) 
 { 
-    int i, j, menor, aux; 
+    int i, j, menor, aux, c = 0, t = 0;
+
     for (i = 0; i < n - 1; i++)
     {
         menor = i;
@@ -40,6 +38,7 @@ void selection_sort(int *v, int n)
             {
                 menor = j;
             }
+            c++;
         }
 
         if(i != menor)
@@ -47,32 +46,32 @@ void selection_sort(int *v, int n)
             aux = v[i];
             v[i] = v[menor];
             v[menor] = aux;
+            t++;
         }
         
     }
 
-   
+    r[0] = c;
+    r[1] = t;
 }
 
-void insertion_sort(int *v, int n) 
+void insertion_sort(int *v, int n, int *r) 
 { 
-    int i, k, j, aux; 
+    int i, k, j, aux, c = 0, t = 0; 
 
     for (k = 1; k < n; k++)
     { 
-        aux = v[k]; 
+        aux = v[k];
+        c++;
 
         for (j = k; (j > 0) && (aux < v[j - 1]); j--)
+        {
             v[j] = v[j - 1];
-        v[j] = aux;
-    } 
-
-    printf("Vetor ordenado:\n");
-    printf("[");
-    for (i = 0; i < n; i++)
-    {
-        printf(" %d", v[i]);
+            v[j] = aux;
+            t++;
+        }
     }
 
-    printf(" ]\n\n");
+    r[0] = c;
+    r[1] = t;
 }
