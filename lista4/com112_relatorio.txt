@@ -1,0 +1,6 @@
+Número de elementos ordenados: 5
+Método Insertion Sort
+    Tempo de execução: 0.000001s
+    Número de comparações: 4
+    Número de movimentações: 5
+

@@ -62,15 +62,16 @@ void insertion_sort(int *v, int n, int *r)
     for (k = 1; k < n; k++)
     { 
         aux = v[k];
-        c++;
 
         for (j = k; (j > 0) && (aux < v[j - 1]); j--)
         {
             v[j] = v[j - 1];
-            v[j] = aux;
             t++;
         }
-    }
+        v[j] = aux;
+        c++;
+        
+    } 
 
     r[0] = c;
     r[1] = t;
