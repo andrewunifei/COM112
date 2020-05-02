@@ -42,6 +42,7 @@ int menu()
 void generateArray(int *array, int n){
     int i;
 
+    srand(time(NULL));
     for (i = 0; i < n; i++)
     {
         array[i] = rand() % 50;
