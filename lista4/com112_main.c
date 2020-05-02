@@ -55,7 +55,7 @@ int main()
     scanf("%d", &n);
 
     int vet[n];
-    int dataArray[3];
+    int dataArray[2];
 
     generateArray(vet, n);
 
