@@ -55,6 +55,25 @@ void report(int length, int* dataArray, clock_t t){
         writeFile(length, copiedArray, 1);
 }
 
+void relatorio(double time, int comparison, int movement, int flag)
+{
+    if (flag == 0)
+    {
+        printf("Método Bubble Sort:\n");
+    }
+    else if(flag == 1){
+        printf("Método Selection Sort:\n");
+    }
+    else{
+        printf("Método Insertion Sort:\n");
+    }
+    
+    printf("    Tempo de execução: %fs\n", time);
+    printf("    Número de comparações: %d\n",comparison);
+    printf("    Número de movimentações: %d\n", movement);
+    printf("\n");
+}
+
 int menu()
 {
     int opc;
@@ -139,6 +158,8 @@ int main()
         writeFile(n, vet, 1);
 
         writeReport(n, dataArray[0], dataArray[1], flag, time);
+
+        relatorio(time, dataArray[0], dataArray[1], flag);
 
         opc = menu(n, vet);
     }
