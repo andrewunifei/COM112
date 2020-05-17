@@ -7,6 +7,7 @@ typedef struct data{
     int comparison;
     int movement;
     int flag;
+    int secondFlag;
     double time;
 }data;
 
@@ -32,11 +33,11 @@ void writeFile(int length, int *array, int flag){
     FILE *filep;
     
     if(flag == 0){
-        filep = fopen ("com112_entrada.txt", "a");
+        filep = fopen ("com112_entrada.txt", "w");
     }
     else
     {
-        filep = fopen ("com112_saida.txt", "a");
+        filep = fopen ("com112_saida.txt", "w");
     }
     
 
@@ -56,7 +57,7 @@ void writeFile(int length, int *array, int flag){
     fclose(filep);
 }
 
-void writeReport(int length, int comparison, int movement, int flag, double time){
+void writeReport(int length, int comparison, int movement, int flag, int secondFlag, double time){
     data *instance;
     instance = malloc(sizeof(data));
 
@@ -100,6 +101,13 @@ void writeReport(int length, int comparison, int movement, int flag, double time
     fprintf(fp, "%s", "    Número de movimentações: ");
     fprintf(fp, "%d", instance->movement);
     fprintf(fp, "%s", "\n");
+    
+    if(secondFlag == 1){
+        fprintf(fp, "%s", "=======================================");
+    }
+    else if(secondFlag == 2){
+        fprintf(fp, "%s", "=======================================");
+    }
    
     fprintf(fp, "%s", "\n");
 

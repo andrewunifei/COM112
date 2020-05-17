@@ -4,6 +4,28 @@
 #include "com112_sort.h"
 #include "com112_file.h"
 
+void relatorio(double time, int comparison, int movement, int flag)
+{
+    if (flag == 0)
+    {
+        printf("Método Bubble Sort:\n");
+    }
+    else if(flag == 1){
+        printf("Método Selection Sort:\n");
+    }
+    else if(flag == 2){
+        printf("Método Insertion Sort:\n");
+    }
+    else{
+        printf("Método Merge Sort:\n");
+    }
+    
+    printf("    Tempo de execução: %fs\n", time);
+    printf("    Número de comparações: %d\n",comparison);
+    printf("    Número de movimentações: %d\n", movement);
+    printf("\n");
+}
+
 void copyArray(int *Array, int *copiedArray, int length){
     int i;
 
@@ -13,12 +35,11 @@ void copyArray(int *Array, int *copiedArray, int length){
 }
 
 void report(int length, int* dataArray, clock_t t){
-        double time;
-        int Array[length], copiedArray[length], i;
+        int Array[length], copiedArray[length], i, secondFlag = 0;
 
         readFile(Array, length);
 
-        for(i = 0; i < 3; i++){ // AQUI É i < 4 NÃO SE ESQUEÇA DE MUDAR!!!
+        for(i = 0; i < 4; i++){
             if(i == 0){
                 copyArray(Array, copiedArray, length);
 
@@ -40,38 +61,22 @@ void report(int length, int* dataArray, clock_t t){
                 insertion_sort(copiedArray, length, dataArray);
                 t = clock() - t;
             }
-            // else{
-            //     copyArray(Array, copiedArray);
+            else{
+                copyArray(Array, copiedArray, length);
 
-            //     t = clock();
-            //     merge_sort(copiedArray, n, dataArray);
-            //     t = clock() - t;
-            // }
+                t = clock();
+                merge_sort(copiedArray, 0, length - 1, dataArray);
+                t = clock() - t;
 
-            time = ((double)t)/CLOCKS_PER_SEC;
-            writeReport(length, dataArray[0], dataArray[1], i, time); // i aqui está se comportando como flag
+                secondFlag = 1;
+            }
+
+            double time = ((double)t)/CLOCKS_PER_SEC;
+            relatorio(time, dataArray[0], dataArray[1], i); // i aqui está se comportando como flag
+            writeReport(length, dataArray[0], dataArray[1], i, secondFlag, time); // i aqui está se comportando como flag
         }
 
         writeFile(length, copiedArray, 1);
-}
-
-void relatorio(double time, int comparison, int movement, int flag)
-{
-    if (flag == 0)
-    {
-        printf("Método Bubble Sort:\n");
-    }
-    else if(flag == 1){
-        printf("Método Selection Sort:\n");
-    }
-    else{
-        printf("Método Insertion Sort:\n");
-    }
-    
-    printf("    Tempo de execução: %fs\n", time);
-    printf("    Número de comparações: %d\n",comparison);
-    printf("    Número de movimentações: %d\n", movement);
-    printf("\n");
 }
 
 int menu()
@@ -105,18 +110,29 @@ void generateArray(int *array, int n){
 int main()
 {
     int n, opc, flag;
-    printf("Escolha o tamanho do vetor que você deseja criar\n");
+    double* time;
+
+    printf("Entre com o tamanho do vetor que você deseja criar\n");
     scanf("%d", &n);
 
-    int vet[n];
+    int vet[n], aux[n];
     int dataArray[2];
 
-    generateArray(vet, n);
+    dataArray[0] = 0;
+    dataArray[1] = 0;
+
+    generateArray(aux, n);
 
     writeFile(n, vet, 0);
     opc = menu(n, vet);
 
     clock_t t;
+
+    backpoint:
+
+
+    // para nao perder o vetor desordenado
+    copyArray(aux, vet, n);
 
     switch (opc)
     {
@@ -141,12 +157,12 @@ int main()
             t = clock() - t;
             break;
 
-        // case 4:
-        //     flag = 3;
-        //     t = clock();
-        //     merge_sort(vet, n, dataArray);
-        //     t = clock() - t;
-        //     break;
+        case 4:
+            flag = 3;
+            t = clock();
+            merge_sort(vet, 0, n - 1, dataArray);
+            t = clock() - t;
+            break;
 
         case 5:
             report(n, dataArray, t);   
@@ -157,16 +173,18 @@ int main()
 
         writeFile(n, vet, 1);
 
-        writeReport(n, dataArray[0], dataArray[1], flag, time);
+        writeReport(n, dataArray[0], dataArray[1], flag, 2, time);
 
         relatorio(time, dataArray[0], dataArray[1], flag);
 
         opc = menu(n, vet);
+        goto backpoint;
     }
     else if(opc == 5){
         printf("\n");
         printf("Ordenação realizada com SUCESSO!\n\n");
         opc = menu(n, vet);
+        goto backpoint;
     }
     else{
         return 0;
