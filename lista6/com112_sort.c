@@ -157,3 +157,46 @@ void merge_sort(int arr[], int l, int r, int *info)
         merge(arr, l, m, r, info); 
     } 
 }
+
+void swap(int* a, int* b) 
+{ 
+    int t = *a; 
+    *a = *b; 
+    *b = t; 
+} 
+
+int partition (int arr[], int low, int high, int *info) 
+{ 
+    long int c = 0, t = 0;
+    int pivot = arr[high];
+    int i = (low - 1);
+  
+    for (int j = low; j <= high- 1; j++) 
+    { 
+        if (arr[j] < pivot) 
+        { 
+            i++;
+            swap(&arr[i], &arr[j]);
+            t++;
+        }
+        c++;
+    } 
+    swap(&arr[i + 1], &arr[high]);
+    t++;
+
+    info[0] = c + info[0];
+    info[1] = t + info[1];
+      
+    return (i + 1); 
+} 
+
+void quick_sort(int arr[], int low, int high, int *info) 
+{ 
+    if (low < high) 
+    { 
+        int pi = partition(arr, low, high, info); 
+ 
+        quick_sort(arr, low, pi - 1, info); 
+        quick_sort(arr, pi + 1, high, info); 
+    } 
+} 

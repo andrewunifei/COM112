@@ -16,19 +16,21 @@ void relatorio(double time, int comparison, int movement, int flag)
     else if(flag == 2){
         printf("Método Insertion Sort:\n");
     }
-    else{
+    else if(flag == 3){
         printf("Método Merge Sort:\n");
+    }
+    else{
+        printf("Método Quick Sort:\n");
     }
     
     printf("    Tempo de execução: %fs\n", time);
     printf("    Número de comparações: %d\n",comparison);
     printf("    Número de movimentações: %d\n", movement);
-    printf("\n");
+    printf("\n\n");
 }
 
 void copyArray(int *Array, int *copiedArray, int length){
     int i;
-
     for(i = 0; i < length; i++){
         copiedArray[i] = Array[i];
     }
@@ -39,33 +41,32 @@ void report(int length, int* dataArray, clock_t t){
 
         readFile(Array, length);
 
-        for(i = 0; i < 4; i++){
-            if(i == 0){
-                copyArray(Array, copiedArray, length);
+        for(i = 0; i < 5; i++){
+            copyArray(Array, copiedArray, length);
 
+            if(i == 0){
                 t = clock();
                 bubble_sort(copiedArray, length, dataArray);
                 t = clock() - t;
             }
             else if(i == 1){
-                copyArray(Array, copiedArray, length);
-
                 t = clock();
                 selection_sort(copiedArray, length, dataArray);
                 t = clock() - t;
             }
             else if(i == 2){
-                copyArray(Array, copiedArray, length);
-
                 t = clock();
                 insertion_sort(copiedArray, length, dataArray);
                 t = clock() - t;
             }
-            else{
-                copyArray(Array, copiedArray, length);
-
+            else if(i == 3){
                 t = clock();
                 merge_sort(copiedArray, 0, length - 1, dataArray);
+                t = clock() - t;
+            }
+            else{
+                t = clock();
+                quick_sort(copiedArray, 0, length - 1, dataArray);
                 t = clock() - t;
 
                 secondFlag = 1;
@@ -88,8 +89,9 @@ int menu()
     printf("Digite (2) para Selection Sort\n");
     printf("Digite (3) para Insertion Sort\n");
     printf("Digite (4) para Merge Sort\n");
-    printf("Digite (5) para gerar relatório\n");
-    printf("Digite (6) para sair\n");
+    printf("Digite (5) para Quick Sort\n");
+    printf("Digite (6) para gerar relatório\n");
+    printf("Digite (7) para sair\n");
 
     scanf("%d", &opc);
 
@@ -109,7 +111,7 @@ void generateArray(int *array, int n){
 
 int main()
 {
-    int n, opc, flag;
+    int n, opc, flag, kike;
     double* time;
 
     printf("Entre com o tamanho do vetor que você deseja criar\n");
@@ -163,12 +165,20 @@ int main()
             merge_sort(vet, 0, n - 1, dataArray);
             t = clock() - t;
             break;
-
+        
         case 5:
-            report(n, dataArray, t);   
+            flag = 4;
+            t = clock();
+            quick_sort(vet, 0, n - 1, dataArray);
+            t = clock() - t;
+            break;
+
+        case 6:
+            report(n, dataArray, t);
+            break;  
     }
 
-    if(opc <= 4){
+    if(opc <= 5){
         double time = ((double)t)/CLOCKS_PER_SEC;
 
         writeFile(n, vet, 1);
@@ -180,7 +190,7 @@ int main()
         opc = menu(n, vet);
         goto backpoint;
     }
-    else if(opc == 5){
+    else if(opc == 6){
         printf("\n");
         printf("Ordenação realizada com SUCESSO!\n\n");
         opc = menu(n, vet);
