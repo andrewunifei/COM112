@@ -111,7 +111,7 @@ void generateArray(int *array, int n){
 
 int main()
 {
-    int n, opc, flag, kike;
+    int n, opc, flag;
     double* time;
 
     printf("Entre com o tamanho do vetor que você deseja criar\n");
